@@ -1,8 +1,5 @@
+import { Country } from '../types/Countries';
 const url = `https://restcountries.com/v3.1`;
-
-interface Country {
-  name: string;
-}
 
 export async function getAllCountries(): Promise<Country[]> {
   try {
