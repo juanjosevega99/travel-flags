@@ -5,16 +5,13 @@ import { CountryDetails } from './components/allCountries/CountryDetails';
 import { HomePage } from './pages/HomePage';
 
 function App() {
-  const PUBLIC_URL = 'http://localhost:5173'
-
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path='/' caseSensitive element={<HomePage />} />
-        <Route caseSensitive path='/:name' element={<CountryDetails />} />
+        <Route path='/:name' element={<CountryDetails />} />
+        <Route path='/' element={<HomePage />} />
       </Routes>
-      <HomePage />
     </BrowserRouter>
   );
 }
