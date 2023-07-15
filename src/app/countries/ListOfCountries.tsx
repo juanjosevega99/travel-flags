@@ -28,13 +28,13 @@ export const ListOfCountries = () => {
       <h2>All Countries</h2>
       {countries.slice(0, 5).map((country) => (
         <section key={country.name.official}>
-          <Link href='/countries/[name]' as={`/countries/${country.name.common.toLowerCase().replace(/\s/g, "%20")}`}>
+          <Link href='/countries/[name]' as={`/countries/${country.name.common}`}>
           {country.flags && (
             <Image
               src={country.flags.svg || country.flags.png}
               alt='Landscape picture'
-              width={300}
-              height={300}
+              width={250}
+              height={250}
             />
           )}
           <h2>{country.name.common}</h2>
