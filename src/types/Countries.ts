@@ -9,6 +9,7 @@ export interface Country {
   area: number;
   languages: Language[];
   currencies: Currency[];
+  flags: CountryFlags
   // TODO: Add other properties as needed
 }
 
@@ -21,4 +22,10 @@ interface Currency {
   code: string;
   name: string;
   symbol: string;
+}
+
+interface CountryFlags {
+  png: string;
+  svg: string;
+  // alt: string;
 }
