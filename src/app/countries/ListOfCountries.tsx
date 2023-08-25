@@ -28,7 +28,7 @@ export const ListOfCountries = () => {
       <h2>All Countries</h2>
       {countries.slice(0, 5).map((country) => (
         <section key={country.name.official}>
-          <Link href='/countries/[name]' as={`/countries/${country.name.common}`}>
+          <Link href='/countries/[code]' as={`/countries/${country.cca2.toLowerCase()}`}>
           {country.flags && (
             <Image
               src={country.flags.svg || country.flags.png}

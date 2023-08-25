@@ -15,16 +15,16 @@ export async function getAllCountries(): Promise<Country[]> {
   }
 }
 
-export async function getCountryDetails(countryName: string) {
+export async function getCountryDetails(countryCode: string) {
   try {
-    const response = await fetch(`${url}/name/${countryName}`);
+    const response = await fetch(`${url}/name/${countryCode}`);
     if (!response.ok) {
-      throw new Error(`Failed to fetch details for ${countryName}.`);
+      throw new Error(`Failed to fetch details for ${countryCode}.`);
     }
     const data = await response.json();
     return data[0];
   } catch (error) {
-    console.error(`Error while fetching details for ${countryName}:`, error);
+    console.error(`Error while fetching details for ${countryCode}:`, error);
     throw error;
   }
 }

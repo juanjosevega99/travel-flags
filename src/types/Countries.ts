@@ -10,6 +10,7 @@ export interface Country {
   languages: Language[];
   currencies: Currency[];
   flags: CountryFlags
+  cca2: string
   // TODO: Add other properties as needed
 }
 
