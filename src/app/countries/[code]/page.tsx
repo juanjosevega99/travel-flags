@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getCountryDetails } from '../../../api/countriesAPI';
+import { getCountryByCode } from '../../../api/countriesAPI';
 
 interface CountryDetailsProps {
   params: {
@@ -11,7 +11,7 @@ interface CountryDetailsProps {
 const CountryDetails: React.FC<CountryDetailsProps> = async ({
   params: { code },
 }) => {
-  const country = await getCountryDetails(code);
+  const country = await getCountryByCode(code);
 
   return (
     <div>
