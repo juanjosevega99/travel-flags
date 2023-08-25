@@ -1,5 +1,5 @@
 import Image from 'next/image';
-
+import Link from 'next/link';
 import { getCountryDetails } from '../../../api/countriesAPI';
 
 interface CountryDetailsProps {
@@ -22,7 +22,14 @@ const CountryDetails: React.FC<CountryDetailsProps> = async ({
         height={250}
       />
       <h3>{country.name.common}</h3>
-      <h3>{country.capital}</h3>
+      <h3>Capital: {country.capital}</h3>
+      
+      <div>
+        <h4>Maps:</h4>
+        <p>
+        <Link href={country.maps.googleMaps} target="_blank">Google Maps</Link>
+        </p>
+      </div>
     </div>
   );
 };

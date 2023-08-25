@@ -15,9 +15,9 @@ export async function getAllCountries(): Promise<Country[]> {
   }
 }
 
-export async function getCountryDetails(countryCode: string) {
+export async function getCountryByCode(countryCode: string) {
   try {
-    const response = await fetch(`${url}/name/${countryCode}`);
+    const response = await fetch(`${url}/alpha/${countryCode}`);
     if (!response.ok) {
       throw new Error(`Failed to fetch details for ${countryCode}.`);
     }
