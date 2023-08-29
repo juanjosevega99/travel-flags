@@ -1,10 +1,9 @@
-import { HomePage } from './countries/page';
-import styles from './styles.module.css';
+import { ListOfCountries } from './countries/page';
 
 export default function Home() {
   return (
     <>
-      <HomePage />
+      <ListOfCountries />
     </>
   );
 }
