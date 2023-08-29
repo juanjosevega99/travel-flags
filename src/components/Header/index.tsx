@@ -1,14 +1,16 @@
+import styles from "./styles.module.css";
+
 export const Header = () => {
   return (
-    <div>
-      <header>
+    <div className={styles.headerContainer}>
+      <header className={styles.headerTitle}>
         <h1>Country Explorer</h1>
       </header>
-      <div className='dropdown'>
+      <div className={styles.dropdown}>
         <select>
-          <option value='latam'>Latam</option>
-          <option value='europe'>Europe</option>
-          <option value='asia'>Asia</option>
+          <option value='Americas'>Americas</option>
+          <option value='Europe'>Europe</option>
+          <option value='Asia'>Asia</option>
         </select>
       </div>
     </div>
