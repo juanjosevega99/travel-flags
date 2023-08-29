@@ -30,17 +30,17 @@ export const ListOfCountries = () => {
 
   const handleRegionSelect = (region: string) => {
     setSelectedRegion(region);
+    setSearchTerm('');
   };
 
   const handleSearch = (searchTerm: string) => {
     setSearchTerm(searchTerm);
+    setSelectedRegion('');
   };
 
   const filteredCountries = countries.filter((country) => {
-    if (selectedRegion) {
-      return country.region === selectedRegion;
-    }
-    return true;
+    const regionFilter =
+      selectedRegion === '' || country.region === selectedRegion;
 
     // Apply the search filter
     const searchFilter =
@@ -50,6 +50,25 @@ export const ListOfCountries = () => {
     return regionFilter && searchFilter;
   });
 
+  function getFirstItem(data: any): string {
+    if (Array.isArray(data) && data.length > 0) {
+      return data[0];
+    }
+    if (typeof data === 'string') {
+      return data;
+    }
+    return 'N/A';
+  }
+
+  function getCurrencyDisplay(currencies: any): string {
+    const currencyCode = Object.keys(currencies)[0];
+    const currency = currencies[currencyCode];
+    if (currency) {
+      return `${currency.name} (${currency.symbol})`;
+    }
+    return 'N/A';
+  }
+
   return (
     <div>
       <Header />
@@ -57,24 +76,45 @@ export const ListOfCountries = () => {
         onRegionSelect={handleRegionSelect}
         onSearch={handleSearch}
       />
-      {filteredCountries.map((country) => (
-        <section key={country.name.official}>
-          <Link
-            href='/countries/[code]'
-            as={`/countries/${country.cca2.toLowerCase()}`}
-          >
-            {country.flags && (
-              <Image
-                src={country.flags.svg || country.flags.png}
-                alt='Landscape picture'
-                width={250}
-                height={250}
-              />
-            )}
-            <h2>{country.name.common}</h2>
-          </Link>
-        </section>
-      ))}
+      <div className={styles.container}>
+        {filteredCountries.map((country) => (
+          <div key={country.name.official} className={styles.country_card}>
+            <Link
+              href='/countries/[code]'
+              as={`/countries/${country.cca2.toLowerCase()}`}
+            >
+              <div className={styles.country_flag}>
+                <Image
+                  loader={() => country.flags.png}
+                  // src={country.flags.svg || country.flags.png}
+                  src={country.flags.png}
+                  alt='Landscape picture'
+                  width={270}
+                  height={170}
+                />
+              </div>
+              <div className={styles.country_info}>
+                <h3 className={styles.country_title}>{country.name.common}</h3>
+                <div>
+                  <p>Capital: {getFirstItem(country.capital)}</p>
+                  <p>
+                    Language:{' '}
+                    {country.languages
+                      ? getFirstItem(Object.values(country.languages))
+                      : 'N/A'}
+                  </p>
+                  <p>
+                    Currency:{' '}
+                    {country.currencies
+                      ? getCurrencyDisplay(country.currencies)
+                      : 'N/A'}
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
