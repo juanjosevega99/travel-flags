@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import styles from './styles.module.css';
 
 interface FilterByRegionOrNameProps {
   onRegionSelect: (region: string) => void;
@@ -24,7 +25,16 @@ export const FilterByRegionOrName: React.FC<FilterByRegionOrNameProps> = ({
   };
 
   return (
-    <div className='filter-container'>
+    <div className={styles.container}>
+      <div className={styles.search_container}>
+        <input
+          type='text'
+          id='search'
+          value={searchCountry}
+          onChange={handleSearchChange}
+          placeholder='Search for a country'
+        />
+      </div>
       <button onClick={handleRegionToggle}>Filter by Region</button>
       {showRegions && (
         <div className='region-options'>
@@ -41,15 +51,6 @@ export const FilterByRegionOrName: React.FC<FilterByRegionOrNameProps> = ({
           ))}
         </div>
       )}
-      <div className='search-container'>
-        <input
-          type='text'
-          id='search'
-          value={searchCountry}
-          onChange={handleSearchChange}
-          placeholder='Search for a country'
-        />
-      </div>
     </div>
   );
 };
