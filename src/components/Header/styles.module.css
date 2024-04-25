@@ -2,9 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
 }
 
 .header_title {
+  padding: 58px;
   margin: 0;
 }

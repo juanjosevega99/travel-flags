@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Header } from '../../components/Header';
 import { FilterByRegionOrName } from '../../components/FilterByRegionOrName';
 import { getAllCountries } from '../../api/countriesAPI';
 import { Country } from '../../types/Countries';
@@ -71,7 +70,6 @@ export const ListOfCountries = () => {
 
   return (
     <div>
-      <Header />
       <FilterByRegionOrName
         onRegionSelect={handleRegionSelect}
         onSearch={handleSearch}
