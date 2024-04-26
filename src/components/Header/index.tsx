@@ -8,6 +8,9 @@ export const Header = () => {
         <Link href='/'>
           <h1>Country Explorer</h1>
         </Link>
+        <Link href='/profile'>
+          <h1>profile</h1>
+        </Link>
       </header>
     </div>
   );
