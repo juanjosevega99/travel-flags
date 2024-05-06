@@ -63,10 +63,10 @@ const Profile = () => {
           : haveVisitedCountries
         ).map((country) => (
           <div key={country.name.official} className={styles.country_card}>
-            <Link
+            {/* <Link
               href='/countries/[code]'
               as={`/countries/${country.cca2.toLowerCase()}`}
-            >
+            > */}
               <div className={styles.country_flag}>
                 <Image
                   loader={() => country.flags.png}
@@ -94,7 +94,7 @@ const Profile = () => {
                   </p>
                 </div>
               </div>
-            </Link>
+            {/* </Link> */}
           </div>
         ))}
       </div>
