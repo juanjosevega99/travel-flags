@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { client } from '../../libs/DB';
 import { getFirstItem, getCurrencyDisplay } from '../../libs/utils';
 import { Country } from '../../types/Countries';
-import { getCountriesByCode } from '../../api/countriesAPI';
+import { API_URL } from '../../../config';
 import styles from '../countries/styles.module.css';
 
 type SetterFunction = (countries: Country[]) => void;
@@ -29,9 +29,14 @@ const Profile = () => {
           sql: sqlQuery,
           args: [1], // Replace '1' with the actual user ID
         });
-        const codes = response.rows.map((row) => row.country_code).join(',');
-        const countries = await getCountriesByCode(codes);
-        setter(countries);
+        const countriesCode = response.rows
+          .map((row) => row.country_code)
+          .join(',');
+        const countriesResponse = await fetch(
+          `${API_URL}/alpha?codes=${countriesCode}`
+        );
+        const countriesData: Country[] = await countriesResponse.json();
+        setter(countriesData);
       } catch (error) {
         console.error('Failed to fetch countries to visit:', error);
       }

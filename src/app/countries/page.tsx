@@ -5,11 +5,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { FilterByRegionOrName } from '../../components/FilterByRegionOrName';
-import { getAllCountries } from '../../api/countriesAPI';
 import { client } from '../../libs/DB';
 import { getCurrencyDisplay, getFirstItem } from '../../libs/utils';
 
 import { Country } from '../../types/Countries';
+import { API_URL } from '../../../config';
 import styles from './styles.module.css';
 
 const ListOfCountries = () => {
@@ -20,8 +20,9 @@ const ListOfCountries = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const countriesData = await getAllCountries();
-        setCountries(countriesData);
+        const response = await fetch(`${API_URL}/all`);
+        const data: Country[] = await response.json();
+        setCountries(data);
       } catch (error) {
         // Handle error
       }
