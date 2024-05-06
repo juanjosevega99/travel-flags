@@ -6,6 +6,9 @@ import Link from 'next/link';
 
 import { FilterByRegionOrName } from '../../components/FilterByRegionOrName';
 import { getAllCountries } from '../../api/countriesAPI';
+import { client } from '../../libs/DB';
+import { getCurrencyDisplay, getFirstItem } from '../../libs/utils';
+
 import { Country } from '../../types/Countries';
 import styles from './styles.module.css';
 
@@ -41,7 +44,6 @@ export const ListOfCountries = () => {
     const regionFilter =
       selectedRegion === '' || country.region === selectedRegion;
 
-    // Apply the search filter
     const searchFilter =
       searchTerm === '' ||
       country.name.common.toLowerCase().includes(searchTerm.toLowerCase());
@@ -49,24 +51,35 @@ export const ListOfCountries = () => {
     return regionFilter && searchFilter;
   });
 
-  function getFirstItem(data: any): string {
-    if (Array.isArray(data) && data.length > 0) {
-      return data[0];
-    }
-    if (typeof data === 'string') {
-      return data;
-    }
-    return 'N/A';
-  }
+  const handleWantToGo = async (country_code: string) => {
+    try {
+      // Assume user ID is available or fetched from context/session
+      const userId = 1; // Replace with actual user ID retrieval logic
+      const query =
+        'INSERT INTO countries_to_visit (user_id, country_code) VALUES (?, ?)';
 
-  function getCurrencyDisplay(currencies: any): string {
-    const currencyCode = Object.keys(currencies)[0];
-    const currency = currencies[currencyCode];
-    if (currency) {
-      return `${currency.name} (${currency.symbol})`;
+      const xd = await client.execute({
+        sql: query,
+        args: [userId, country_code],
+      });
+      console.log('🚀 ~ handleWantToGo ~ xd:', xd);
+    } catch (error) {
+      console.error('Failed to save want to go:', error);
     }
-    return 'N/A';
-  }
+  };
+
+  const handleHaveGone = async (country_code: string) => {
+    try {
+      const userId = 1; // Replace with actual user ID retrieval logic
+      // const response = await haveGone(userId, country_code);
+      const query =
+        'INSERT INTO countries_have_visited (user_id, country_code) VALUES (?, ?)';
+
+      await client.execute({ sql: query, args: [userId, country_code] });
+    } catch (error) {
+      console.error('Failed to save have gone:', error);
+    }
+  };
 
   return (
     <div>
@@ -110,6 +123,20 @@ export const ListOfCountries = () => {
                 </div>
               </div>
             </Link>
+            <div className={styles.buttons_container}>
+              <button
+                className={styles.button}
+                onClick={() => handleWantToGo(country.cca2)}
+              >
+                I want to go
+              </button>
+              <button
+                className={styles.button}
+                onClick={() => handleHaveGone(country.cca2)}
+              >
+                I have already gone
+              </button>
+            </div>
           </div>
         ))}
       </div>
