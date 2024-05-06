@@ -6,16 +6,9 @@
   gap: 30px;
 }
 
-/* .container { TODO: mobile
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: 0 60px;
-  gap: 30px;
-} */
-
 .country_card {
-  display: flex;
+  display: grid;
+  grid-template-rows: auto auto; 
   align-items: center;
   justify-content: space-between;
   width: 270px;
@@ -39,4 +32,17 @@
 .country_title {
   font-size: 18px;
   font-weight: 800;
+}
+
+.buttons_container {
+  width: 100%;
+  display: flex; /* Use flex to layout buttons in a row */
+  justify-content: center; /* Center buttons in the container */
+  gap: 10px; /* Add space between buttons */
+  padding: 10px 0; /* Add padding above and below the buttons */
+}
+
+.button {
+  border-radius: 4px;
+  padding: 5px; /* Add padding above and below the buttons */
 }
