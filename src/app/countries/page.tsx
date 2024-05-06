@@ -12,7 +12,7 @@ import { getCurrencyDisplay, getFirstItem } from '../../libs/utils';
 import { Country } from '../../types/Countries';
 import styles from './styles.module.css';
 
-export const ListOfCountries = () => {
+const ListOfCountries = () => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [selectedRegion, setSelectedRegion] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -58,11 +58,10 @@ export const ListOfCountries = () => {
       const query =
         'INSERT INTO countries_to_visit (user_id, country_code) VALUES (?, ?)';
 
-      const xd = await client.execute({
+      await client.execute({
         sql: query,
         args: [userId, country_code],
       });
-      console.log('🚀 ~ handleWantToGo ~ xd:', xd);
     } catch (error) {
       console.error('Failed to save want to go:', error);
     }
@@ -143,3 +142,5 @@ export const ListOfCountries = () => {
     </div>
   );
 };
+
+export default ListOfCountries;
