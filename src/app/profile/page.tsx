@@ -8,7 +8,8 @@ import { client } from '../../libs/DB';
 import { getFirstItem, getCurrencyDisplay } from '../../libs/utils';
 import { Country } from '../../types/Countries';
 import { API_URL } from '../../../config';
-import styles from '../countries/styles.module.css';
+// import styles from '../countries/styles.module.css';
+import styles from './styles.module.css';
 
 type SetterFunction = (countries: Country[]) => void;
 
@@ -27,7 +28,7 @@ const Profile = () => {
       try {
         const response = await client.execute({
           sql: sqlQuery,
-          args: [1], // Replace '1' with the actual user ID
+          args: [1], // TODO: Replace '1' with the actual user ID
         });
         const countriesCode = response.rows
           .map((row) => row.country_code)
@@ -55,10 +56,24 @@ const Profile = () => {
   return (
     <div>
       <div>
-        <button onClick={() => setActiveTab('wantToGo')}>
+        <button
+          className={`${styles.button} ${
+            activeTab === 'wantToGo'
+              ? styles.activeButton
+              : styles.inactiveButton
+          }`}
+          onClick={() => setActiveTab('wantToGo')}
+        >
           Countries I Want to Go
         </button>
-        <button onClick={() => setActiveTab('haveVisited')}>
+        <button
+          className={`${styles.button} ${
+            activeTab === 'haveVisited'
+              ? styles.activeButton
+              : styles.inactiveButton
+          }`}
+          onClick={() => setActiveTab('haveVisited')}
+        >
           Countries I Have Visited
         </button>
       </div>
