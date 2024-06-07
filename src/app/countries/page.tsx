@@ -74,8 +74,11 @@ const ListOfCountries = () => {
 
   const handleWantToGo = async (country_code: string) => {
     try {
-      // TODO: replace here when i have authentication
-      const userId = user?.id; // Replace with actual user ID retrieval logic
+      if (!user?.id) {
+        console.error('User ID is not available');
+        return;
+      }
+      const userId = user?.id;
       const selectQuery =
         'SELECT 1 FROM countries_to_visit WHERE user_id = ? AND country_code = ?';
 
@@ -101,8 +104,11 @@ const ListOfCountries = () => {
 
   const handleHaveGone = async (country_code: string) => {
     try {
-      // TODO: replace here when i have authentication
-      const userId = user?.id; // Replace with actual user ID retrieval logic
+      if (!user?.id) {
+        console.error('User ID is not available');
+        return;
+      }
+      const userId = user?.id;
       const selectQuery =
         'SELECT 1 FROM countries_have_visited WHERE user_id = ? AND country_code = ?';
 
