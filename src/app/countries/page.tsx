@@ -3,7 +3,10 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { User } from '@supabase/supabase-js';
 
+import { supabase } from '../../supabaseClient';
 import { FilterByRegionOrName } from '../../components/FilterByRegionOrName';
 import { client } from '../../libs/DB';
 import { getCurrencyDisplay, getFirstItem } from '../../libs/utils';
@@ -16,6 +19,23 @@ const ListOfCountries = () => {
   const [countries, setCountries] = useState<Country[]>([]);
   const [selectedRegion, setSelectedRegion] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+      if (error || !session) {
+        router.push('/auth/login');
+      } else {
+        setUser(session.user);
+      }
+    };
+    fetchUser();
+  }, [router]);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -54,15 +74,26 @@ const ListOfCountries = () => {
 
   const handleWantToGo = async (country_code: string) => {
     try {
-      // Assume user ID is available or fetched from context/session
-      const userId = 1; // Replace with actual user ID retrieval logic
-      const query =
-        'INSERT INTO countries_to_visit (user_id, country_code) VALUES (?, ?)';
+      // TODO: replace here when i have authentication
+      const userId = user?.id; // Replace with actual user ID retrieval logic
+      const selectQuery =
+        'SELECT 1 FROM countries_to_visit WHERE user_id = ? AND country_code = ?';
 
-      await client.execute({
-        sql: query,
+      const selectResponse = await client.execute({
+        sql: selectQuery,
         args: [userId, country_code],
       });
+
+      if (selectResponse.rows.length === 0) {
+        const insertQuery =
+          'INSERT INTO countries_to_visit (user_id, country_code) VALUES (?, ?)';
+        await client.execute({
+          sql: insertQuery,
+          args: [userId, country_code],
+        });
+      } else {
+        console.error('Country already in want to go list');
+      }
     } catch (error) {
       console.error('Failed to save want to go:', error);
     }
@@ -70,12 +101,26 @@ const ListOfCountries = () => {
 
   const handleHaveGone = async (country_code: string) => {
     try {
-      const userId = 1; // Replace with actual user ID retrieval logic
-      // const response = await haveGone(userId, country_code);
-      const query =
-        'INSERT INTO countries_have_visited (user_id, country_code) VALUES (?, ?)';
+      // TODO: replace here when i have authentication
+      const userId = user?.id; // Replace with actual user ID retrieval logic
+      const selectQuery =
+        'SELECT 1 FROM countries_have_visited WHERE user_id = ? AND country_code = ?';
 
-      await client.execute({ sql: query, args: [userId, country_code] });
+      const selectResponse = await client.execute({
+        sql: selectQuery,
+        args: [userId, country_code],
+      });
+
+      if (selectResponse.rows.length === 0) {
+        const insertQuery =
+          'INSERT INTO countries_have_visited (user_id, country_code) VALUES (?, ?)';
+        await client.execute({
+          sql: insertQuery,
+          args: [userId, country_code],
+        });
+      } else {
+        console.log('Country already in have visited list');
+      }
     } catch (error) {
       console.error('Failed to save have gone:', error);
     }
