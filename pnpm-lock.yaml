@@ -9,10 +9,10 @@ dependencies:
     specifier: 0.6.0
     version: 0.6.0
   '@supabase/auth-helpers-nextjs':
-    specifier: ^0.10.0
+    specifier: 0.10.0
     version: 0.10.0(@supabase/supabase-js@2.43.4)
   '@supabase/supabase-js':
-    specifier: ^2.43.4
+    specifier: 2.43.4
     version: 2.43.4
   '@types/node':
     specifier: 20.4.2
