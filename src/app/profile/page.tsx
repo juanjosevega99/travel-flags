@@ -1,18 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { User } from '@supabase/supabase-js';
 
 import { supabase } from '../../supabaseClient';
 import { client } from '../../libs/DB';
-import { getFirstItem, getCurrencyDisplay } from '../../libs/utils';
 import { Country } from '../../types/Countries';
 import { API_URL } from '../../../config';
-// import styles from '../countries/styles.module.css';
 import styles from './styles.module.css';
+import CountryCard from '../../components/countryCard';
 
 type SetterFunction = (countries: Country[]) => void;
 
@@ -33,7 +30,6 @@ const Profile = () => {
         data: { session },
         error,
       } = await supabase.auth.getSession();
-      console.log('🚀 ~ fetchUser ~ session:', session);
       if (error || !session) {
         router.push('/auth/login');
       } else {
@@ -125,42 +121,7 @@ const Profile = () => {
             ? wantToGoCountries
             : haveVisitedCountries
           ).map((country) => (
-            <div key={country.name.official} className={styles.country_card}>
-              <Link
-                href='/countries/[code]'
-                as={`/countries/${country.cca2.toLowerCase()}`}
-              >
-                <div className={styles.country_flag}>
-                  <Image
-                    loader={() => country.flags.png}
-                    src={country.flags.png}
-                    alt={`${country.name.common} flag`}
-                    width={270}
-                    height={170}
-                  />
-                </div>
-                <div className={styles.country_info}>
-                  <h3 className={styles.country_title}>
-                    {country.name.common}
-                  </h3>
-                  <div>
-                    <p>Capital: {getFirstItem(country.capital)}</p>
-                    <p>
-                      Language:{' '}
-                      {country.languages
-                        ? getFirstItem(Object.values(country.languages))
-                        : 'N/A'}
-                    </p>
-                    <p>
-                      Currency:{' '}
-                      {country.currencies
-                        ? getCurrencyDisplay(country.currencies)
-                        : 'N/A'}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            </div>
+            <CountryCard key={country.name.official} country={country} />
           ))
         )}
       </div>
