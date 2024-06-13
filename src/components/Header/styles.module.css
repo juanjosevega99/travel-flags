@@ -2,9 +2,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%; /* Ensure the container spans the full width */
+  padding: 0 60px;
 }
 
-.header_title {
-  padding: 58px;
-  margin: 0;
+.header_link {
+  margin-right: 20px;
+  margin: 40px;
 }
