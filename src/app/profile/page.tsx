@@ -110,6 +110,12 @@ const Profile = () => {
         >
           Countries I Have Visited
         </button>
+
+        {activeTab === 'haveVisited' && (
+          <div className={styles.count}>
+            Number of countries I have visited: {haveVisitedCountries.length}
+          </div>
+        )}
       </div>
       <div className={styles.container}>
         {loading ? (
