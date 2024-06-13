@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import { supabase } from '../../../supabaseClient';
 import { client } from '../../../libs/DB';
+import styles from '../AuthForm.module.css';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -43,21 +44,27 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h1>Signup</h1>
-      <input
-        type='email'
-        placeholder='Email'
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type='password'
-        placeholder='Password'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleSignup}>Signup</button>
+    <div className={styles.container}>
+      <div className={styles.form}>
+        <h1 className={styles.formTitle}>Signup</h1>
+        <input
+          className={styles.input}
+          type='email'
+          placeholder='Email'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          className={styles.input}
+          type='password'
+          placeholder='Password'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button className={styles.button} onClick={handleSignup}>
+          Signup
+        </button>
+      </div>
     </div>
   );
 };

@@ -3,13 +3,13 @@ import styles from './styles.module.css';
 
 export const Header = () => {
   return (
-    <div className={styles.header_container}>
-      <header className={styles.header_title}>
+    <div>
+      <header className={styles.header_container}>
         <Link href='/'>
           <h1>Country Explorer</h1>
         </Link>
         <Link href='/profile'>
-          <h1>profile</h1>
+          <h1 className={styles.header_link}>Profile</h1>
         </Link>
       </header>
     </div>
