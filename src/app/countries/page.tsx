@@ -27,7 +27,7 @@ const ListOfCountries = () => {
         error,
       } = await supabase.auth.getSession();
       if (error || !session) {
-        router.push('/auth/login');
+        router.push('/auth/signup');
       } else {
         setUser(session.user);
       }
