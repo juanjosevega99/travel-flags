@@ -55,3 +55,9 @@
 .input:focus {
   box-shadow: 0 0 5px rgba(255, 126, 95, 0.5);
 }
+
+@media (min-width: 300px) and (max-width: 701px) {
+  .form {
+    margin: 30px;
+  }
+}

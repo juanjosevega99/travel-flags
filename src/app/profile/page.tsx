@@ -89,7 +89,7 @@ const Profile = () => {
 
   return (
     <div>
-      <div>
+      <div className={styles.buttonsToGo}>
         <button
           className={`${styles.button} ${
             activeTab === 'wantToGo'
@@ -110,7 +110,8 @@ const Profile = () => {
         >
           Countries I Have Visited
         </button>
-
+      </div>
+      <div className={styles.titleNumbers}>
         {activeTab === 'haveVisited' && (
           <div className={styles.count}>
             Number of countries I have visited: {haveVisitedCountries.length}
