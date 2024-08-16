@@ -13,6 +13,10 @@ import CountryCard from '../../components/countryCard';
 
 type SetterFunction = (countries: Country[]) => void;
 
+const sortCountriesAlphabetically = (countries: Country[]) => {
+  return countries.sort((a, b) => a.name.official.localeCompare(b.name.official));
+};
+
 const Profile = () => {
   const [activeTab, setActiveTab] = useState('wantToGo');
   const [wantToGoCountries, setWantToGoCountries] = useState<Country[]>([]);
@@ -66,7 +70,7 @@ const Profile = () => {
           `${API_URL}/alpha?codes=${countriesCode}`
         );
         const countriesData: Country[] = await countriesResponse.json();
-        setter(countriesData);
+        setter(sortCountriesAlphabetically(countriesData));
       } catch (error) {
         setError('Failed to fetch countries.');
         setter([]);
