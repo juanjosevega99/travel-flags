@@ -7,7 +7,7 @@ import { User } from '@supabase/supabase-js';
 import { supabase } from '../../supabaseClient';
 import { client } from '../../libs/DB';
 import { Country } from '../../types/Countries';
-import { API_URL } from '../../../config';
+import { getCountriesByCode } from '../../api/countriesAPI';
 import styles from './styles.module.css';
 import CountryCard from '../../components/countryCard';
 
@@ -66,12 +66,11 @@ const Profile = () => {
         const countriesCode = response.rows
           .map((row) => row.country_code)
           .join(',');
-        const countriesResponse = await fetch(
-          `${API_URL}/alpha?codes=${countriesCode}`
-        );
-        const countriesData: Country[] = await countriesResponse.json();
+        
+        const countriesData: Country[] = await getCountriesByCode(countriesCode);
         setter(sortCountriesAlphabetically(countriesData));
       } catch (error) {
+        console.error('Failed to fetch countries:', error);
         setError('Failed to fetch countries.');
         setter([]);
       } finally {

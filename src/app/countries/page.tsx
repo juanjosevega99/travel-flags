@@ -9,7 +9,7 @@ import { FilterByRegionOrName } from '../../components/FilterByRegionOrName';
 import { client } from '../../libs/DB';
 
 import { Country } from '../../types/Countries';
-import { API_URL } from '../../../config';
+import { getAllCountries } from '../../api/countriesAPI';
 import styles from './styles.module.css';
 import CountryCard from '../../components/countryCard';
 
@@ -38,11 +38,10 @@ const ListOfCountries = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await fetch(`${API_URL}/all`);
-        const data: Country[] = await response.json();
+        const data = await getAllCountries();
         setCountries(data);
       } catch (error) {
-        // Handle error
+        console.error('Error fetching countries:', error);
       }
     };
 
